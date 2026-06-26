@@ -1,13 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  requester_name: MyString
-  item_name: MyString
+  title: MyString
+  description: MyText
   amount: 9.99
-  status: MyString
+  status: 1
+  user: one
 
 two:
-  requester_name: MyString
-  item_name: MyString
+  title: MyString
+  description: MyText
   amount: 9.99
-  status: MyString
+  status: 1
+  user: two
