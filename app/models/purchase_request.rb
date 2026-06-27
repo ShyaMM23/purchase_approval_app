@@ -6,7 +6,7 @@ class PurchaseRequest < ApplicationRecord
   before_validation :set_default_status
   after_create :log_creation
   after_save :log_save
-ex  after_save :notify_on_status_change
+  after_save :notify_on_status_change
   after_commit :log_commit, on: [:create, :update]
 
   private

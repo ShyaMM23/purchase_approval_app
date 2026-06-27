@@ -1,0 +1,8 @@
+approval:
+  auto_approve_below: 100
+  max_amount: 50000
+  default_currency: "USD"
+  notify_approver_on_submit: true
+  roles_that_can_approve:
+    - approver
+    - admin
