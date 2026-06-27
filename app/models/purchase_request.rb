@@ -1,7 +1,9 @@
 class PurchaseRequest < ApplicationRecord
   belongs_to :user
-  enum :status, { draft: 0, submitted: 1, approved: 2, rejected: 3 }  
-  validates :title, presence: true
+  enum :status, { draft: 0, submitted: 1, approved: 2, rejected: 3 }
+  # Using a configuration value instead of a hardcoded number improves maintainability.
+  # this allows us to change the title length limit in approval_settings.yml without modifying the application code.
+  validates :title, presence: true, length: {maximum: APPROVAL_SETTINGS.dig(:approval, :max_title_length)}
   validates :amount,presence: true,numericality:{ greater_than: 0 }
   before_validation :set_default_status
   after_create :log_creation
