@@ -1,6 +1,7 @@
 class Api::PurchaseRequestsController < ApplicationController
   before_action :set_purchase_request, only: [:show, :update, :submit, :approve, :reject]
   before_action :set_current_user
+  before_action :validate_amount_limit, only: [:create]
   after_action :log_response
   around_action :measure_time, only: [:index]
 
@@ -44,6 +45,14 @@ class Api::PurchaseRequestsController < ApplicationController
       render json: { status: "success", data: { purchase_request: @purchase_request } }
     else
       render json: { status: "failure", message: @purchase_request.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def validate_amount_limit
+    max_amount = APPROVAL_SETTINGS.dig(:approval, :max_amount)
+    if params[:purchase_request][:amount].to_f > max_amount
+      render json: { status: "failure", message: "Amount exceeds the maximum allowed" }, status: :unprocessable_entity
+      return
     end
   end
 
